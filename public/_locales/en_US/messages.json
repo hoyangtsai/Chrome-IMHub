@@ -1,0 +1,10 @@
+{
+   "appDesc": {
+      "description": "App description.",
+      "message": "A standalone app for chatting."
+   },
+   "appName": {
+      "description": "App name.",
+      "message": "IM Hub"
+   }
+}

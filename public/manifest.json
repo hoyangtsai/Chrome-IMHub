@@ -1,0 +1,22 @@
+{
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "default_locale": "en_US",
+  "permissions": [
+    "notifications",
+    "webview",
+    "fullscreen",
+    "geolocation"
+  ],
+  "icons": {
+    "128": "icon_128.png",
+    "16": "icon_16.png"
+  },
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  }
+}
