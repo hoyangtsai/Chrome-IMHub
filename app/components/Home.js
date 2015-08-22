@@ -21,21 +21,20 @@ var Home = React.createClass({
   },
 
   _handlePermissionrequest(e) {
-    if (e.permission === 'fullscreen' ||
-        e.permission === 'download' ||
-        e.permission === 'geolocation') {
+    if (e.permission === 'fullscreen' || e.permission === 'download' ||
+        e.permission === 'geolocation' || e.permission === 'filesystem') {
       e.request.allow();
     }
   },
 
   componentDidMount: function() {
-    this.refs.chatView.getDOMNode().addEventListener('newwindow', this._handleNewwindow);
-    this.refs.chatView.getDOMNode().addEventListener('permissionrequest', this._handleNewwindow);
+    window.addEventListener('newwindow', this._handleNewwindow);
+    window.addEventListener('permissionrequest', this._handlePermissionrequest);
   },
 
   componentWillUnmount: function() {
-    this.refs.chatView.getDOMNode().removeEventListener('newwindow', this._handleNewwindow);
-    this.refs.chatView.getDOMNode().removeEventListener('permissionrequest', this._handleNewwindow);
+    window.removeEventListener('newwindow', this._handleNewwindow);
+    window.removeEventListener('permissionrequest', this._handlePermissionrequest);
   },
 
   render: function() {
@@ -48,12 +47,11 @@ var Home = React.createClass({
     };
 
     return (
-      <section>
+      <div>
         <Navbar changeRoom={this.changeRoom} />
-        <webview ref="chatView" style={styles.webview}
-          src={this.state.chatlink} >
+        <webview ref="chatView" style={styles.webview} src={this.state.chatlink} >
         </webview>
-      </section>
+      </div>
     )
   }
 });
