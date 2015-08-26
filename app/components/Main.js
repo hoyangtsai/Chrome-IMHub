@@ -4,7 +4,9 @@ var RouteHandler = require('react-router').RouteHandler;
 var Main = React.createClass({
   render: function(){
     return (
-      <RouteHandler />
+      <main>
+        <RouteHandler />
+      </main>
     )
   }
 });

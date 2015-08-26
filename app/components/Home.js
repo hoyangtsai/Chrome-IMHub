@@ -5,13 +5,20 @@ var Navbar = require('./Navbar');
 var Home = React.createClass({
   getInitialState: function() {
     return {
-      chatlink: 'https://www.messenger.com/login',
+      chatRoom: 'Messenger',
+      chatLink: 'https://www.messenger.com/login',
+      webviewStyle: {
+        position: 'absolute',
+        width: '100%',
+        height: 'calc(100% - 64px)',
+      },
     };
   },
 
-  changeRoom: function(link) {
+  _handleRoomChange(payload) {
     this.setState({
-      chatlink: link.route
+      chatLink: payload.route,
+      chatRoom: payload.text
     });
   },
 
@@ -27,29 +34,29 @@ var Home = React.createClass({
     }
   },
 
+  _handleWebviewLoaded(e) {
+    this.refs.nav.changeAppbarStyle(this.state.chatRoom);
+  },
+
   componentDidMount: function() {
-    window.addEventListener('newwindow', this._handleNewwindow);
-    window.addEventListener('permissionrequest', this._handlePermissionrequest);
+    this.refs.chatView.getDOMNode().addEventListener('newwindow', this._handleNewwindow);
+    this.refs.chatView.getDOMNode().addEventListener('permissionrequest', this._handlePermissionrequest);
+    this.refs.chatView.getDOMNode().addEventListener('loadstop', this._handleWebviewLoaded);
   },
 
   componentWillUnmount: function() {
-    window.removeEventListener('newwindow', this._handleNewwindow);
-    window.removeEventListener('permissionrequest', this._handlePermissionrequest);
+    this.refs.chatView.getDOMNode().removeEventListener('newwindow', this._handleNewwindow);
+    this.refs.chatView.getDOMNode().removeEventListener('permissionrequest', this._handlePermissionrequest);
+    this.refs.chatView.getDOMNode().removeEventListener('loadstop', this._handleWebviewLoaded);
   },
 
   render: function() {
-    var styles = {
-      webview: {
-        position: 'absolute',
-        width: '100%',
-        height: 'calc(100% - 64px)',
-      }
-    };
-
     return (
       <div>
-        <Navbar changeRoom={this.changeRoom} />
-        <webview ref="chatView" style={styles.webview} src={this.state.chatlink} >
+        <Navbar ref="nav"
+          roomChange={this._handleRoomChange} />
+        <webview ref="chatView"
+          style={this.state.webviewStyle} src={this.state.chatLink}>
         </webview>
       </div>
     )
