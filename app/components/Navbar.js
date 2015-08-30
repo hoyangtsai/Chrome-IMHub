@@ -64,6 +64,13 @@ var Navbar = React.createClass({
           }
         });
         break;
+      case 'WeChat':
+        this.setState({
+          appbarStyle: {
+            backgroundColor: '#54AF36',
+          }
+        });
+        break;
       default:
         this.setState({
           appbarStyle: {
@@ -85,18 +92,18 @@ var Navbar = React.createClass({
   render: function() {
     var menuItems = [
       { type: MenuItem.Types.SUBHEADER, text: 'Where to go' },
-      { route: 'https://www.messenger.com/login', text: 'Messenger' },
-      { route: 'https://hoyangt.github.io/webogram/', text: 'Telegram' },
-      { route: 'https://web.skype.com/', text: 'Skype' },
-      { route: 'https://web.whatsapp.com/', text: 'Whatsapp' },
-      { route: 'https://accounts.google.com/ServiceLogin?service=talk&passive=1209600&continue=https://hangouts.google.com/&followup=https://hangouts.google.com/', text: 'Hangouts' },
+      { text: 'Messenger', route: 'https://www.messenger.com/login' },
+      { text: 'Telegram', route: 'https://hoyangt.github.io/webogram/' },
+      { text: 'Skype', route: 'https://web.skype.com/' },
+      { text: 'Whatsapp', route: 'https://web.whatsapp.com/' },
+      { text: 'Hangouts', route: 'https://accounts.google.com/ServiceLogin?service=talk&passive=1209600&continue=https://hangouts.google.com/&followup=https://hangouts.google.com/' },
+      { text: 'WeChat', route: 'https://web.wechat.com/' }
     ];
     return (
       <nav>
         <AppBar title='IM Hub'
           onLeftIconButtonTouchTap={this._handleClick}
           showMenuIconButton={true}
-          isInitiallyOpen={true}
           style={this.state.appbarStyle} />
         <LeftNav
           ref="leftNav"
