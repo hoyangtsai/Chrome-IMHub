@@ -13,7 +13,7 @@ var Home = React.createClass({
         width: '100%',
         height: 'calc(100% - 64px)',
       },
-      forecastOpt: true
+      weatherForecasted: true
     };
   },
 
@@ -39,9 +39,9 @@ var Home = React.createClass({
   _handleWebviewLoaded(e) {
     this.refs.nav.changeAppbarStyle(this.state.chatRoom);
 
-    if (!this.state.forecastOpt) {
+    if (!this.state.weatherForecasted) {
       navigator.geolocation.getCurrentPosition(this._forecastWeather);
-      this.setState({forecastOpt: true});
+      this.setState({weatherForecasted: true});
     }
   },
 
@@ -61,11 +61,14 @@ var Home = React.createClass({
   _showWetherNotification(forecast){
     var forecastday = forecast.txt_forecast.forecastday;
 
-    var hours = new Date().getHours();
+    var date = new Date();
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+
     var time = 0;
     if (hours >= 16 && hours <= 21) {
       time = 1;
-    } else if(hours >= 22){
+    } else if(hours >= 22 || (hours == 0 && minutes < 5)){
       time = 2;
     }
 
@@ -83,7 +86,7 @@ var Home = React.createClass({
           message: optMessage,
           iconUrl: iconBase64
         };
-        chrome.notifications.create('forecast', opt);
+        chrome.notifications.create('IMHubWeatherForecast', opt);
       }.bind(this));
   },
 
@@ -92,7 +95,8 @@ var Home = React.createClass({
     this.refs.chatView.getDOMNode().addEventListener('permissionrequest', this._handlePermissionrequest);
     this.refs.chatView.getDOMNode().addEventListener('loadstop', this._handleWebviewLoaded);
 
-    this.setState({forecastOpt: false});
+    chrome.notifications.clear('IMHubWeatherForecast');
+    this.setState({weatherForecasted: false});
   },
 
   componentWillUnmount: function() {
