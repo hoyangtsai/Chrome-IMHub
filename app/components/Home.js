@@ -61,14 +61,12 @@ var Home = React.createClass({
   _showWetherNotification(forecast){
     var forecastday = forecast.txt_forecast.forecastday;
 
-    var date = new Date();
-    var hours = date.getHours();
-    var minutes = date.getMinutes();
+    var hours = new Date().getHours();
 
     var time = 0;
     if (hours >= 16 && hours <= 21) {
       time = 1;
-    } else if(hours >= 22 || (hours == 0 && minutes < 5)){
+    } else if(hours >= 22){
       time = 2;
     }
 
