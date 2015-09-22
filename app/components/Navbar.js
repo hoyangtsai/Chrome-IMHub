@@ -2,7 +2,7 @@ var React = require('react');
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var { AppBar, LeftNav, MenuItem } = require('material-ui');
+var { AppBar, LeftNav, MenuItem } = mui;
 
 var Navbar = React.createClass({
   propTyeps: {
@@ -12,7 +12,7 @@ var Navbar = React.createClass({
   getInitialState: function() {
     return {
       appbarStyle: {
-        backgroundColor: '#0C84FB',
+        backgroundColor: '#565656',
       },
     };
   },
@@ -25,60 +25,6 @@ var Navbar = React.createClass({
     return {
       muiTheme: ThemeManager.getCurrentTheme()
     };
-  },
-
-  changeAppbarStyle(chatRoom) {
-    switch(chatRoom) {
-      case 'Messenger':
-        this.setState({
-          appbarStyle: {
-            backgroundColor: '#0C84FB',
-          }
-        });
-        break;
-      case 'Telegram':
-        this.setState({
-          appbarStyle: {
-            backgroundColor: '#5D82A1',
-          }
-        });
-        break;
-      case 'Skype':
-        this.setState({
-          appbarStyle: {
-            backgroundColor: '#40AFED',
-          }
-        });
-        break;
-      case 'Whatsapp':
-        this.setState({
-          appbarStyle: {
-            backgroundColor: '#72CD55',
-          }
-        });
-        break;
-      case 'Hangouts':
-        this.setState({
-          appbarStyle: {
-            backgroundColor: '#469557',
-          }
-        });
-        break;
-      case 'WeChat':
-        this.setState({
-          appbarStyle: {
-            backgroundColor: '#54AF36',
-          }
-        });
-        break;
-      default:
-        this.setState({
-          appbarStyle: {
-            backgroundColor: '#4BB8D1',
-          }
-        });
-        break;
-    }
   },
 
   _handleClick(e) {
