@@ -2,7 +2,7 @@ var React = require('react');
 
 var mui = require('material-ui');
 var ThemeManager = new mui.Styles.ThemeManager();
-var { AppBar, LeftNav, MenuItem } = mui;
+var { AppBar, LeftNav, MenuItem, FlatButton } = mui;
 
 var Navbar = React.createClass({
   propTyeps: {
@@ -35,14 +35,19 @@ var Navbar = React.createClass({
     this.props.roomChange(payload);
   },
 
+  _handelKeepButton(e) {
+    // iconElementRight={<FlatButton label="Keep" onClick={this._handelKeepButton} />}
+    console.log('keep clicked');
+  },
+
   render: function() {
     var menuItems = [
       { type: MenuItem.Types.SUBHEADER, text: 'Where to go' },
       { text: 'Messenger', route: 'https://www.messenger.com/login' },
-      { text: 'Telegram', route: 'https://hoyangt.github.io/webogram/' },
+      { text: 'Telegram', route: 'https://hoyangtsai.github.io/webogram/' },
       { text: 'Skype', route: 'https://web.skype.com/' },
       { text: 'Whatsapp', route: 'https://web.whatsapp.com/' },
-      { text: 'Hangouts', route: 'https://accounts.google.com/ServiceLogin?service=talk&passive=1209600&continue=https://hangouts.google.com/&followup=https://hangouts.google.com/' },
+      { text: 'Hangouts', route: 'https://accounts.google.com/ServiceLogin?service=talk&continue=https://hangouts.google.com/' },
       { text: 'WeChat', route: 'https://web.wechat.com/' }
     ];
     return (
