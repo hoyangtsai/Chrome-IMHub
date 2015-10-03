@@ -1,12 +1,12 @@
 {
-  "name": "buy-together",
+  "name": "react-imhub",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Ho-Yang Tsai",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.5.4",
