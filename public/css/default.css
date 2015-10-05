@@ -6,10 +6,10 @@ ul {
   list-style: none;
 }
 
-#im-webview {
-  position: relative;
+webview {
+  position: absolute;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 64px);
 }
 
 #main-container {

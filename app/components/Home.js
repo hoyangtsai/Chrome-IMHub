@@ -8,15 +8,16 @@ var Home = React.createClass({
     return {
       chatRoom: 'Messenger',
       chatLink: 'https://www.messenger.com/login',
-      chatViewStyle: {
-        position: 'absolute',
-        width: '100%',
-        height: 'calc(100% - 64px)',
-      },
       weatherForecasted: true,
-      showRoomStyle: 'position: absolute; width: 100%; height: calc(100% - 64px);',
-      hideRoomStyle: 'display: none;'
     };
+  },
+
+  _createChatRoom(url, app){
+    var webview = document.createElement('webview');
+    webview.src = url;
+    webview.setAttribute('id', app);
+    webview.setAttribute('style', this.state.showRoomStyle);
+    return webview;
   },
 
   _handleRoomChange(payload) {
@@ -93,14 +94,6 @@ var Home = React.createClass({
       }.bind(this));
   },
 
-  _createChatRoom(url, app){
-    var webview = document.createElement('webview');
-    webview.src = url;
-    webview.setAttribute('id', app);
-    webview.setAttribute('style', this.state.showRoomStyle);
-    return webview;
-  },
-
   componentDidMount: function() {
     window.addEventListener('newwindow', this._handleNewwindow);
     window.addEventListener('permissionrequest', this._handlePermissionrequest);
@@ -118,14 +111,14 @@ var Home = React.createClass({
 
   render: function() {
     return (
-      <div ref="chatDiv">
+      <div>
         <Navbar ref="nav"
           roomChange={this._handleRoomChange} />
-        <webview id="Messenger"
-          style={this.state.chatViewStyle} src={this.state.chatLink}>
-        </webview>
+        <div ref="chatDiv">
+          <webview id="Messenger" src={this.state.chatLink} />
+        </div>
       </div>
-    )
+    );
   }
 });
 
