@@ -44,7 +44,7 @@ var Navbar = React.createClass({
     var menuItems = [
       { type: MenuItem.Types.SUBHEADER, text: 'Where to go' },
       { text: 'Messenger', route: 'https://www.messenger.com/login' },
-      { text: 'Telegram', route: 'https://hoyangtsai.github.io/webogram/' },
+      { text: 'Telegram', route: 'https://web.telegram.org/' },
       { text: 'Skype', route: 'https://web.skype.com/' },
       { text: 'Whatsapp', route: 'https://web.whatsapp.com/' },
       { text: 'Hangouts', route: 'https://accounts.google.com/ServiceLogin?service=talk&continue=https://hangouts.google.com/' },
