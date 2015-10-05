@@ -2,10 +2,6 @@ body {
   margin: 0 auto;
 }
 
-ul {
-  list-style: none;
-}
-
 webview {
   position: absolute;
   width: 100%;
