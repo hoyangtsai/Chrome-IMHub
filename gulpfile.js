@@ -1,5 +1,3 @@
-'use strict';
-
 var gulp = require('gulp');
 var webpack = require("gulp-webpack");
 var notify = require('gulp-notify');
@@ -16,7 +14,7 @@ gulp.task('webpack', function() {
     .pipe(gulp.dest('.'));
 });
 
-gulp.task('minify-css', function() {
+gulp.task('minifyCss', function() {
   return gulp.src('app/styles/*.css')
     .pipe(minifyCss({compatibility: 'ie8'}))
     .pipe(gulp.dest('public/styles'));
@@ -24,7 +22,7 @@ gulp.task('minify-css', function() {
 
 gulp.task('watch', function() {
   gulp.watch(['app/*.js', 'app/**/*.js'], ['webpack']);
-  gulp.watch('app/styles/*.css', ['minify-css']);
+  gulp.watch('app/styles/*.css', ['minifyCss']);
 });
 
 gulp.task('default', ['webpack','watch']);
