@@ -9,14 +9,6 @@ var Navbar = React.createClass({
     roomChange: React.PropTypes.func.isRequired
   },
 
-  getInitialState: function() {
-    return {
-      appbarStyle: {
-        backgroundColor: '#565656',
-      },
-    };
-  },
-
   childContextTypes: {
     muiTheme: React.PropTypes.object
   },
@@ -24,6 +16,14 @@ var Navbar = React.createClass({
   getChildContext() {
     return {
       muiTheme: ThemeManager.getCurrentTheme()
+    };
+  },
+
+  getInitialState: function() {
+    return {
+      appbarStyle: {
+        backgroundColor: '#565656',
+      },
     };
   },
 

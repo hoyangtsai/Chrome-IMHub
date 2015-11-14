@@ -6,32 +6,10 @@ var helpers = require('../utils/helpers');
 var Home = React.createClass({
   getInitialState: function() {
     return {
-      chatRoom: 'Messenger',
-      chatLink: 'https://www.messenger.com/login',
-      weatherForecasted: true,
+      chatName: 'Messenger',
+      chatSrc: 'https://www.messenger.com/login',
+      weatherForecasted: false,
     };
-  },
-
-  _createChatRoom(url, app){
-    var webview = document.createElement('webview');
-    webview.src = url;
-    webview.setAttribute('id', app);
-    webview.setAttribute('style', this.state.showRoomStyle);
-    return webview;
-  },
-
-  _handleRoomChange(payload) {
-    var currentChat = document.getElementById(this.state.chatRoom);
-    if (document.getElementById(payload.text)) {
-      currentChat.style.display = 'none';
-      var prevChat = document.getElementById(payload.text);
-      prevChat.style.display = '';
-    } else {
-      var newChat = this._createChatRoom(payload.route, payload.text);
-      this.refs.chatDiv.getDOMNode().appendChild(newChat);
-      currentChat.style.display = 'none';
-    }
-    this.setState({chatRoom : payload.text});
   },
 
   _handleNewwindow(e) {
@@ -46,11 +24,35 @@ var Home = React.createClass({
     }
   },
 
-  _handleWebviewLoaded(e) {
+  _handleContentload(e) {
     if (!this.state.weatherForecasted) {
       navigator.geolocation.getCurrentPosition(this._forecastWeather);
       this.setState({weatherForecasted: true});
     }
+  },
+
+  _createChatRoom(payload) {
+    var webview = document.createElement('webview');
+    webview.setAttribute('id', payload.text);
+    webview.setAttribute('src', payload.route);
+    webview.addEventListener('newwindow', this._handleNewwindow);
+    webview.addEventListener('permissionrequest', this._handlePermissionrequest);
+    webview.addEventListener('contentload', this._handleContentload);
+    return webview;
+  },
+
+  _handleRoomChange(payload) {
+    var currentChat = document.getElementById(this.state.chatName);
+    if (document.getElementById(payload.text)) {
+      currentChat.style.display = 'none';
+      var prevChat = document.getElementById(payload.text);
+      prevChat.style.display = '';
+    } else {
+      var newChat = this._createChatRoom(payload);
+      this.refs.chatDiv.getDOMNode().appendChild(newChat);
+      currentChat.style.display = 'none';
+    }
+    this.setState({chatName: payload.text});
   },
 
   _forecastWeather(position) {
@@ -95,18 +97,12 @@ var Home = React.createClass({
   },
 
   componentDidMount: function() {
-    window.addEventListener('newwindow', this._handleNewwindow);
-    window.addEventListener('permissionrequest', this._handlePermissionrequest);
-    window.addEventListener('loadstop', this._handleWebviewLoaded);
+    var messneger = document.getElementById('Messenger');
+    messneger.addEventListener('newwindow', this._handleNewwindow);
+    messneger.addEventListener('permissionrequest', this._handlePermissionrequest);
+    messneger.addEventListener('contentload', this._handleContentload);
 
     chrome.notifications.clear('IMHubWeatherForecast');
-    this.setState({weatherForecasted: false});
-  },
-
-  componentWillUnmount: function() {
-    window.removeEventListener('newwindow', this._handleNewwindow);
-    window.removeEventListener('permissionrequest', this._handlePermissionrequest);
-    window.removeEventListener('loadstop', this._handleWebviewLoaded);
   },
 
   render: function() {
@@ -114,8 +110,8 @@ var Home = React.createClass({
       <div>
         <Navbar ref="nav"
           roomChange={this._handleRoomChange} />
-        <div ref="chatDiv">
-          <webview id="Messenger" src={this.state.chatLink} />
+        <div ref="chatDiv" id="chatDiv">
+          <webview id="Messenger" src={this.state.chatSrc} />
         </div>
       </div>
     );
